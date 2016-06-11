@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Projekt zespołowy - Wykorzystanie sztucznych sieci neuronowych do rozpoznawania płci mózgu">
+  <title>Test zaprogramowania mózgu</title>
+  <link href="style.css" rel="stylesheet">
+  <!-- Bootstrap CDN -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Opis projektu</a>
+          </li>
+          <li class="active"><a href="test.html">Test</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="well">
+      <h3>Zaznacz zdanie, które uznasz za najbardziej prawdziwe.</h3>
+      </br>
+      <form action="ankieta.php" name="questions" method="post">
+        <p>
+          <h4>1. Przy czytaniu mapy lub drogowskazów:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q1" required value="A"> masz trudności i często prosisz o pomoc
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q1" value="B"> obracasz mapę, żeby patrzeć w kierunku, w którym idziesz
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q1" value="C"> nie masz żadnych trudności w czytaniu map i drogowskazów
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>2. Gotujesz skomplikowane danie przy włączonym radiu, dzwoni znajomy. Co robisz?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q2" required value="A"> zostawiasz radio włączone i kontynuujesz gotowanie, rozmawiając przez telefon
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q2" value="B"> wyłączasz radio, rozmawiasz i nadal gotujesz
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q2" value="C"> mówisz, że za chwilę oddzwonisz, gdy tylko skończysz gotować
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>3. Przyjaciele wybierają się do ciebie z wizytą i proszą o wskazówki, jak dotrzeć do twojego nowego domu. Co robisz?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q3" required value="A"> rysujesz im mapkę z wyraźnie zaznaczoną trasą i im ją wysyłasz lub wzywasz kogoś innego, aby im to wytłumaczył
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q3" value="B"> pytasz, jakie znają punkty orientacyjne, potem tłumaczysz na ich podstawie jak dojechać na miejsce
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q3" value="C"> wyjaśniasz im, jak dojechać: "Wjeżdżasz na autostradę, zawracasz, skręcasz w lewo, dojeżdżasz do drugich świateł..."
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>4. Kiedy objaśniasz jakiś nowy pomysł lub koncepcję, prawdopodobnie:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q4" required value="A"> użyjesz ołówka, papieru i gestów mowy ciała
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q4" value="B"> wyjaśnisz słownie, używając gestów i mowy ciała
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q4" value="C"> wyjaśnisz słownie, wyraźnie i krótko
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>5. Kiedy wracasz do domu po obejrzeniu wybitnego filmu, wolisz:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q5" required value="A"> przypominać sobie sceny z filmu
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q5" value="B"> rozmawiać o scenach i o tym, co powiedziano
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q5" value="C"> cytować wszystko, co powiedziano w filmie
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>6. W kinie wolisz siedzieć:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q6" required value="A"> z prawej strony sali
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q6" value="B"> gdziekolwiek, wszystko jedno gdzie
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q6" value="C"> z lewej strony sali
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>7. Znajomy ma urządzenie mechaniczne, które nie działa:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q7" required value="A"> współczujesz i omawiasz z nim, co w związku z tym czuje
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q7" value="B"> polecasz kogoś niezawodnego, kto potrafi to naprawić
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q7" value="C"> próbujesz domyślić się, jak to działa, i naprawić
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>8. Jesteś w nieznanym miejscu i ktoś cię pyta, gdzie jest północ. Co robisz?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q8" required value="A"> przyznajesz się, że nie wiesz
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q8" value="B"> po pewnym namyśle zgadujesz, gdzie jest
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q8" value="C"> bez trudu wskazujesz północ
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>9. Znajdujesz miejsce do parkowania, ale jest ciasno. Musisz wjechać w nie tyłem. Co robisz?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q9" required value="A"> wolisz znaleźć inne miejsce
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q9" value="B"> starasz się ostrożnie wpasować
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q9" value="C"> wjeżdżasz tyłem bez trudności
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>10. Oglądasz telewizję, kiedy dzwoni telefon. Co robisz?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q10" required value="A"> podnosisz słuchawkę przy włączonym telewizorze
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q10" value="B"> ściszasz telewizor i podnosisz słuchawkę
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q10" value="C"> wyłączasz telewizor, każesz wszystkim obecnym umilknąć i podnosisz słuchawkę
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>11. Właśnie usłyszałeś/usłyszałaś nową piosenkę ulubionego artysty. Zazwyczaj...</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q11" required value="A"> potrafisz zaśpiewać fragment piosenki
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q11" value="B"> bez trudności potrafisz zaśpiewać fragment, nawet po jakimś czasie
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q11" value="C"> pamiętasz niektóre słowa, ale trudno ci zaśpiewać fragment
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>12. Jesteś najlepszy(-a) w przewidywaniu rezultatów, dzięki...</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q12" required value="A"> intuicji
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q12" value="B"> dostępnych informacji i przeczuć
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q12" value="C"> dostępnych informacji, faktów i statystyki
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>13. Nie możesz znaleźć kluczy. Co robisz?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q13" required value="A"> zajmujesz się czymś innym, aż sobie przypomnisz
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q13" value="B"> robisz coś innego, ale próbujesz sobie przypomnieć gdzie się znajdują
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q13" value="C"> w myślach otwarzasz swoje kroki, aż sobie przypomnisz gdzie się znajdują
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>14. Jesteś w pokoju hotelowym i słyszysz dochodzący z dużej odległości głos syreny. Potrafisz:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q14" required value="A"> wskazać dokładnie miejsce, z którego pochodzi
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q14" value="B"> prawdopodobnie mógłbyś/mogłabyś wskazać miejsce z którego pochodzi, jeśli się skupisz
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q14" value="C"> nie umiesz wskazać miejsca, z którego pochodzi
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>15. Idziesz na spotkanie towarzyskie i jesteś przedstawiony(-a) siedmiu obcym osobom. Następnego dnia:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q15" required value="A"> potrafisz bez trudu przypomnieć sobie ich twarze
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q15" value="B"> pamiętasz kilka twarzy
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q15" value="C"> bardziej prawdopodobne, że zapamiętasz ich naziwska
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>16. Chcesz na wakacje pojechać na wieś, ale twój partner/partnerka nalega na nadmorski kurort. Aby przekonać go/ją, że twój pomysł jest lepszy:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q16" required value="A"> powiesz mu/jej słodkim tonem, co czujesz. Uwielbiasz wieś, a dzieci i rodzina zawsze się tam dobrze bawią
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q16" value="B"> powiesz mu/jej, że jeśli wybierze się na wieś, będziesz mu/jej wdzięczny(-a) i z przyjemnością następnym razem wybierzesz się nad morze
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q16" value="C"> przedstawiasz fakty: wieś jest bliżej, taniej, są tam zorganizowane sporty i wypoczynek
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>17. Kiedy planujesz zadania na określony dzień, zazwyczaj:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q17" required value="A"> robisz listę, zapisując co jest do zrobienia
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q17" value="B"> myślisz o tym, co trzeba zrobić
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q17" value="C"> wyobrażasz sobie ludzi, których zobaczysz, miejsca, które odwiedzisz, i rzeczy, które będziesz robić
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>18. Znajomy ma kłopoty osobiste i przyszedł je z tobą omówić:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q18" required value="A"> współczujesz mu i wykazujesz zrozumienie
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q18" value="B"> mówisz mu, że kłopoty nigdy nie są aż tak poważne, jak wyglądają, i wyjaśniasz mu dlaczego
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q18" value="C"> poddajesz mu pomysły i radzisz, jak rozwiązać problem
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>19. Dwoje przyjaciół z różnych małżeństw ma ze sobą w tajemnicy romans. Jak szybko to wykryjesz?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q19" required value="A"> wykryjesz bardzo wcześnie
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q19" value="B"> po pewnym czasie
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q19" value="C"> prawdopodobnie niczego nie zauważysz
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>20. Na czym polega życie, twoim zdaniem:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q20" required value="A"> na posiadaniu przyjaciół i życiu w harmonii z otaczającymi cię ludźmi
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q20" value="B"> przyjaznym zachowaniu wobec innych i jednoczesnym zachowaniu osobistej niezależności
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q20" value="C"> osiąganiu ważnych celów, zdobywaniu szacunku innych i zyskiwaniu prestiżu i wyższego poziomu życia
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>21. Gdybyś miał/miała wybór, wolałbyś/wolałabyś pracować:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q21" required value="A"> w zespole, w którym ludzie się uzupełniają
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q21" value="B"> wśród innych, ale zachowując własną przestrzeń
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q21" value="C"> w pojedynkę
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>22. Co lubisz czytać?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q22" required value="A"> powieści, beletrystykę
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q22" value="B"> czasopisma i gazety
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q22" value="C"> publicystykę i biografie
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>23. Kiedy robisz zakupy, masz skłonność:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q23" required value="A"> często kupować pod wpływem impulsu, zwłaszcza na wyprzedażach
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q23" value="B"> masz przygotowany plan ogólny, ale bierzesz, jak leci
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q23" value="C"> czytasz opakowania i porównujesz ceny
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>24. Wolisz iść do łóżka, obudzić się i zjeść posiłek:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q24" required value="A"> kiedy masz ochotę
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q24" value="B"> zgodnie z planem, ale pora nie musi być zawsze ta sama
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q24" value="C"> o tej samej porze każdego dnia
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>25. Właśnie zmieniłeś(-aś) pracę i poznałeś(-aś) wiele nowych osób z personelu. Jedna z nich dzwoni do ciebie do domu:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q25" required value="A"> z łatwością rozpoznajesz głos
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q25" value="B"> rozpoznajesz głos w połowie rozmowy
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q25" value="C"> masz trudności z rozpoznaniem głosu
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>26. Co cię najbardziej denerwuje, kiedy się z kimś kłócisz?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q26" required value="A"> milczenie lub brak reakcji
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q26" value="B"> kiedy rozmówca nie rozumie twojego punktu widzenia
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q26" value="C"> złośliwe pytania lub komentarze
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>27. Jak w szkole traktowałeś(-aś) klasówki z ortografi lub pisanie wypracowań?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q27" required value="A"> Uważałeś(-aś) za stosunkowo łatwe
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q27" value="B"> jedno było łatwiejsze od drugiego
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q27" value="C"> ani w jednym, ani w drugim nie byłeś(-aś) zbyt dobry(-a)
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>28. Kiedy przychodzi do tańca lub gimnastyki przy muzyce:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q28" required value="A"> wyczuwasz muzykę, kiedy już poznasz kroki
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q28" value="B"> niektóre ćwiczenia lub tańce przychodzą łatwiej, inne trudniej
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q28" value="C"> masz trudności z utrzymaniem tempa i rytmu
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>29. Jak dobry(-a) jesteś w rozpoznawaniu i naśladowaniu głosów zwierząt?</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q29" required value="A"> niezbyt
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q29" value="B"> średnio
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q29" value="C"> bardzo dobry(-a)
+            </label>
+          </div>
+        </p>
+        <p>
+          <h4>30. Pod koniec długiego dnia najchętniej:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q30" required value="A"> rozmawiasz z przyjaciółmi lub rodziną, jak minął
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q30" value="B"> słuchasz opowieści innych o ich dniu
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q30" value="C"> czytasz książkę, przeglądasz internet, nic nie mówisz
+            </label>
+          </div>
+        </p>
+
+        <p>
+          <h4>Jesteś:</h4>
+          <div class="radio">
+            <label>
+              <input type="radio" name="sex" required value="kobieta"> kobietą
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="sex" value="mezczyzna"> mężczyzną
+            </label>
+          </div>
+        </p>
+      
+      <input type="submit" value="Wyślij">
+      </form>
+      <h3 id="result"></h3>
+    </div>
+  </div>
+</body>
+
+</html>
